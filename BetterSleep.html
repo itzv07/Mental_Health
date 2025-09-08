@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Better Sleep - Music Player</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+        .container {
+            width: 550px;
+            height: 95vh;
+            overflow-y: scroll;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        .music-box {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #e0e0e0;
+            padding: 15px 25px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            width: 85%;
+            position: relative;
+            transition: transform 0.2s;
+            cursor: pointer;
+        }
+        .music-box:nth-child(odd) {
+            flex-direction: row-reverse;
+            margin-left: auto; /* Align right */
+        }
+        .music-box:nth-child(even) {
+            margin-right: auto; /* Align left */
+        }
+        .music-box:hover {
+            transform: scale(1.05);
+        }
+        .music-info {
+            display: flex;
+            align-items: center;
+            flex-grow: 1; /* Ensure space distribution */
+        }
+        .music-box:nth-child(odd) .music-info {
+            flex-direction: row-reverse;
+        }
+        .music-info img {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            margin-right: 15px;
+        }
+        .music-box:nth-child(odd) .music-info img {
+            margin-right: 0;
+            margin-left: 15px;
+        }
+        .music-details {
+            display: flex;
+            flex-direction: column;
+        }
+        .music-title {
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .music-duration {
+            font-size: 14px;
+            color: gray;
+        }
+        .play-button {
+            font-size: 26px;
+            cursor: pointer;
+            transition: transform 0.2s;
+            margin-left: auto; /* Push button to the right */
+        }
+        .play-button:hover {
+            transform: scale(1.3);
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="music-box" onclick="toggleMusic('forest_lullaby.mp3', this)">
+        <div class="music-info">
+            <img src="Dancingtrees.jpeg" alt="Music Logo">
+            <div class="music-details">
+                <span class="music-title">Forest Lullaby</span>
+                <span class="music-duration">02:18 min</span>
+            </div>
+        </div>
+        <span class="play-button">▶</span>
+    </div>
+
+    <div class="music-box" onclick="toggleMusic('sleep_lullaby.mp3', this)">
+        <div class="music-info">
+            <img src="sleeplullaby.jpg" alt="Music Logo">
+            <div class="music-details">
+                <span class="music-title">Sleep Lullaby</span>
+                <span class="music-duration">05:50 min</span>
+            </div>
+        </div>
+        <span class="play-button">▶</span>
+    </div>
+
+    <div class="music-box" onclick="toggleMusic('Peaceful Sleep.mp3', this)">
+        <div class="music-info">
+            <img src="peacefulsleep.jpg" alt="Music Logo">
+            <div class="music-details">
+                <span class="music-title">Peaceful Sleep</span>
+                <span class="music-duration">05:00 min</span>
+            </div>
+        </div>
+        <span class="play-button">▶</span>
+    </div>
+
+    <div class="music-box" onclick="toggleMusic('Deepflow essence.mp3', this)">
+        <div class="music-info">
+            <img src="deepflowessence.jpg" alt="Music Logo">
+            <div class="music-details">
+                <span class="music-title">Deepflow Essence</span>
+                <span class="music-duration">04:00 min</span>
+            </div>
+        </div>
+        <span class="play-button">▶</span>
+    </div>
+
+    <div class="music-box" onclick="toggleMusic('Very deep_sleep.mp3', this)">
+        <div class="music-info">
+            <img src="verydeepsleep.jpg" alt="Music Logo">
+            <div class="music-details">
+                <span class="music-title">Very Deep Sleep</span>
+                <span class="music-duration">04:20 min</span>
+            </div>
+        </div>
+        <span class="play-button">▶</span>
+    </div>
+</div>
+
+<audio id="music-player" loop>
+    <source id="music-source" src="" type="audio/mp3">
+    Your browser does not support the audio element.
+</audio>
+
+<script>
+    let currentAudio = document.getElementById("music-player");
+    let currentPlayingBox = null; // Keep track of the currently playing music box
+
+    function toggleMusic(track, element) {
+        let musicSource = document.getElementById("music-source");
+
+        // If the same track is playing, toggle play/pause
+        if (currentPlayingBox === element && !currentAudio.paused) {
+            currentAudio.pause();
+            element.querySelector(".play-button").innerText = "▶";
+            currentPlayingBox = null;
+        } else {
+            // Change track and play
+            musicSource.src = track;
+            currentAudio.load();
+            currentAudio.play();
+
+            // Reset previous button
+            if (currentPlayingBox) {
+                currentPlayingBox.querySelector(".play-button").innerText = "▶";
+            }
+
+            // Update UI for new track
+            element.querySelector(".play-button").innerText = "⏸";
+            currentPlayingBox = element;
+        }
+    }
+</script>
+
+</body>
+</html>
